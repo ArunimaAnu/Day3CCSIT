@@ -50,3 +50,14 @@ app.delete("/remove/:id", async (req, res) => {
         console.log(error)
     }
 })
+
+//update
+app.update("/update/:id", async (req, res) => {
+    try {
+        await empModel.findByIdAndUpdate(req.params.id)
+        res.send({ message: "Data " })
+
+    } catch (error) {
+        console.log(error)
+    }
+})
