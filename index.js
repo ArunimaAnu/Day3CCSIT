@@ -39,3 +39,14 @@ app.get('/view', async (req, res) => {
         console.log(error)
     }
 })
+
+//delete
+app.delete("/remove/:id", async (req, res) => {
+    try {
+        await empModel.findByIdAndDelete(req.params.id)
+        res.send({message:"Data Deleted"})
+
+    } catch (error) {
+        console.log(error)
+    }
+})
