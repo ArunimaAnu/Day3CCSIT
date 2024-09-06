@@ -1,11 +1,16 @@
 // 1.import express and put it imto a variable
 const express = require('express')
 require("./connection")
+//import cors
+const cors = require('cors')
 var empModel=require('./model/employee')
 // 2. initialize and ....
 const app = new express()
 // middleware
 app.use(express.json())
+app.use(cors())
+//initialize cors
+//const apps=new cors()
 // 3. Api creation
 app.get('/', (req, res) => { 
     res.send('Welcome')
@@ -13,7 +18,6 @@ app.get('/', (req, res) => {
 app.get('/trial',(req, res)=> {
     res.send('This is a Trial Message')
 })
-
 
 // 4. set a port
 app.listen(3004, () => {
@@ -30,7 +34,8 @@ app.post('/add', async (req, res) => {
         console.log(error)
     }
 })
-app.get('/view', async (req, res) => {
+//view
+app.get('/view',async (req, res) => {
     try {
         var dis = await empModel.find();
         res.send(dis)
@@ -52,10 +57,10 @@ app.delete("/remove/:id", async (req, res) => {
 })
 
 //update
-app.update("/update/:id", async (req, res) => {
+app.put("/update/:id/", async (req, res) => {
     try {
-        await empModel.findByIdAndUpdate(req.params.id)
-        res.send({ message: "Data " })
+        var data= await empModel.findByIdAndUpdate(req.params.id,req.body)
+        res.send({ message: "Data Updated" ,data})
 
     } catch (error) {
         console.log(error)
